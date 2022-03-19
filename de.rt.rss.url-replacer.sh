@@ -33,6 +33,7 @@ cookies_file="cookies.txt"
 #inject_cookie="Cookie: $(cat $cookies_file)"
 
 database_folder="./"
+endlessloop=true
 
 gen_timestamp() {
   echo $(date +%Y.%m.%d-%H\:%M)
@@ -99,6 +100,10 @@ fi
 echo
 echo "________________________________"
 echo
+if ! $endlessloop; then
+  exit 0
+fi
+
 echo " Job done, will restart the main sequence for de.rt.com in 10 minutes!"
 sleep 600
 echo
