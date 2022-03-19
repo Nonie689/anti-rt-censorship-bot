@@ -62,10 +62,9 @@ echo "  $(echo $(gen_timestamp)) - Request .rss from Russia Today!"
 
 #curl "de.rt.com/feeds/news/" --referer https://mail.rt.com/ -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'DNT: 1' -H 'Connection: keep-alive' -H "$inject_cookie"  -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: same-origin' -H 'Sec-Fetch-User: ?1' -H 'TE: trailers' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' -o "${database_folder}${new_name}" > /dev/null 2>&1 
 curl 'https://de.rt.com/feeds/news/' -H 'User-Agent:  FeedFetcher-Google; (+http://www.google.com/feedfetcher.html)' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'DNT: 1' -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'Sec-Fetch-Dest: document' -H 'Sec-Fetch-Mode: navigate' -H 'Sec-Fetch-Site: none' -H 'Cache-Control: max-age=0' -o "${database_folder}${new_name}" > /dev/null 2>&1
-## Check response!
-check_ddos_protect_wall=$(echo $(grep -E "<title>DDOS-GUARD</title>" "$database_folder$new_name" )| wc -l)
 
-if test $check_ddos_protect_wall -gt 0 ; then
+## Check response!
+if grep -E "<title>DDOS-GUARD</title>" "$database_folder$new_name" ; then
    echo
    echo "Please Enter a new valid raw cookie for rt.com - the system has kicked us out!"
    echo "Cookie ID:"
